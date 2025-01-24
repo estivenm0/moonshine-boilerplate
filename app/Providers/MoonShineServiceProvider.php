@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Services\ThemeApplier;
 use Illuminate\Support\ServiceProvider;
+use MoonShine\Contracts\ColorManager\ColorManagerContract;
 use MoonShine\Contracts\Core\DependencyInjection\ConfiguratorContract;
 use MoonShine\Contracts\Core\DependencyInjection\CoreContract;
 use MoonShine\Laravel\DependencyInjection\MoonShine;
@@ -20,16 +22,24 @@ class MoonShineServiceProvider extends ServiceProvider
      * @param  MoonShineConfigurator  $config
      *
      */
-    public function boot(CoreContract $core, ConfiguratorContract $config): void
-    {
+    public function boot(
+        CoreContract $core,
+        ConfiguratorContract $config,
+        ColorManagerContract $colorManager
+    ): void {
         // $config->authEnable();
+
+        (new ThemeApplier($colorManager))->theme1();
+        // (new ThemeApplier($colorManager))->theme2();
+        // (new ThemeApplier($colorManager))->theme3();
+
 
         $core
             ->resources([
                 UserResource::class,
                 RoleResource::class,
                 PermissionResource::class,
-                
+
             ])
             ->pages([
                 ...$config->getPages(),
