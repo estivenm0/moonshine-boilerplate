@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Layouts;
 
+use App\MoonShine\Resources\RoleResource;
+use App\MoonShine\Resources\UserResource;
 use App\Services\ThemeApplier;
 use MoonShine\Laravel\Layouts\AppLayout;
 use MoonShine\ColorManager\ColorManager;
@@ -36,8 +38,8 @@ use MoonShine\UI\Components\{
     When
 };
 use Sweet1s\MoonshineRBAC\Resource\PermissionResource;
-use Sweet1s\MoonshineRBAC\Resource\RoleResource;
-use Sweet1s\MoonshineRBAC\Resource\UserResource;
+use App\MoonShine\Resources\PostResource;
+
 
 final class MoonShineLayout extends AppLayout
 {
@@ -74,12 +76,10 @@ final class MoonShineLayout extends AppLayout
         return [
             MenuGroup::make('system', [
                 MenuItem::make('admins_title',  UserResource::class)
-                    ->translatable('moonshine::ui.resource')
-                    ->icon('s.user-group'),
+                    ->translatable('moonshine::ui.resource'),
 
                 MenuItem::make('role',  RoleResource::class)
-                    ->translatable('moonshine::ui.resource')
-                    ->icon('s.rectangle-group'),
+                    ->translatable('moonshine::ui.resource'),
 
                 MenuItem::make('permissions',  PermissionResource::class)
                     ->translatable('moonshine-rbac::ui')
