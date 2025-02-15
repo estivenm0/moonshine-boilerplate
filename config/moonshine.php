@@ -29,7 +29,7 @@ return [
     // Default flags
     'use_migrations' => false,
     'use_notifications' => true,
-    'use_database_notifications' => false,
+    'use_database_notifications' => true,
 
     // Routing
     'domain' => env('MOONSHINE_DOMAIN'),
