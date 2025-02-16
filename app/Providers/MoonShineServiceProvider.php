@@ -33,6 +33,7 @@ class MoonShineServiceProvider extends ServiceProvider
         (new ThemeApplier($colorManager))->theme1();
         // (new ThemeApplier($colorManager))->theme2();
         // (new ThemeApplier($colorManager))->theme3();
+        // (new ThemeApplier($colorManager))->theme4();
 
 
         $core

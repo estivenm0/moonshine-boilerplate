@@ -8,14 +8,15 @@ Boilerplate personalizable para iniciar el desarrollo de su panel de administrac
 
 - Configuración predeterminada de **Moonshine**.
 - Integración de permisos basados en roles utilizando el paquete [moonshine-roles-permissions](https://github.com/SWEET1S/moonshine-roles-permissions).
-- Tres temas de colores predefinidos.
+- Cuatro temas de colores predefinidos.
 - Soporte para idioma español integrado.
 - Comando para generar todos los permisos de los recursos.
 
 ## Themes
-![theme1](./.docs/theme1.png)
-![theme2](./.docs/theme2.png)
-![theme3](./.docs/theme3.png)
+| ![theme1](./.docs/theme1.png) | ![theme2](./.docs/theme2.png) |
+|--------------------------------|--------------------------------|
+| ![theme3](./.docs/theme3.png)  | ![theme4](./.docs/theme4.png)|
+
 
 
 
@@ -59,9 +60,9 @@ Así es como puedes ejecutar el proyecto localmente:
     php artisan migrate
     ```
 
-7. instala el paquete de permisos
+7. Genera los permisos y crea un rol Super Admin
     ```sh
-    php artisan moonshine-rbac:install
+    php artisan moonshine:generate-permissions
     ```
 
 8. Crea un Usuario

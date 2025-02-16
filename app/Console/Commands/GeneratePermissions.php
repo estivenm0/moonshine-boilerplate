@@ -25,12 +25,26 @@ class GeneratePermissions extends Command
      */
     public function handle()
     {
-        // $this->call('moonshine-rbac:permissions', [
-        //     'resourceName' => ''
-        // ]);
+        $this->call('moonshine-rbac:permissions', [
+            'resourceName' => 'UserResource'
+        ]);
+
+        $this->call('moonshine-rbac:permissions', [
+            'resourceName' => 'RoleResource'
+        ]);
+
+        $this->call('moonshine-rbac:permissions', [
+            'resourceName' => 'PermissionResource'
+        ]);
 
         // $this->call('moonshine-rbac:permissions', [
         //     'resourceName' => ''
         // ]);
+
+
+        $this->call('moonshine-rbac:role', [
+            'name' => 'Super Admin',
+            '--all-permissions' => true
+        ]);
     }
 }
