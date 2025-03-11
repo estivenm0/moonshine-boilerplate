@@ -71,32 +71,4 @@ class ThemeApplier
             ->infoText('#85c1e9', dark: true);
     }
 
-    public function theme3(): void
-    {
-        $this->colorManager->background('#2c3e50')
-            ->content('#34495e')
-            ->tableRow('#3e5066')
-            ->borders('#5d6d7e')
-            ->buttons('#2e86c1')
-            ->dividers('#85929e')
-            ->primary('#1abc9c')
-            ->secondary('#2980b9')
-            ->successBg('#28b463')
-            ->successText('#d4efdf')
-            ->warningBg('#d68910')
-            ->warningText('#f9e79f')
-            ->errorBg('#943126')
-            ->errorText('#f5b7b1')
-            ->infoBg('#5dade2')
-            ->infoText('#d6eaf8');
-
-        $this->colorManager->successBg('#239b56', dark: true)
-            ->successText('#82e0aa', dark: true)
-            ->warningBg('#d68910', dark: true)
-            ->warningText('#f9e79f', dark: true)
-            ->errorBg('#a93226', dark: true)
-            ->errorText('#f5b7b1', dark: true)
-            ->infoBg('#1f618d', dark: true)
-            ->infoText('#aed6f1', dark: true);
-    }
 }

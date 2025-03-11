@@ -7,17 +7,16 @@ namespace App\MoonShine\Resources;
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Traits\Properties;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Validation\Rule;
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Fields\ID;
 use MoonShine\Contracts\UI\FieldContract;
-use MoonShine\Contracts\UI\ComponentContract;
-use MoonShine\Laravel\Fields\Relationships\BelongsTo;
-use MoonShine\Laravel\Fields\Relationships\HasMany;
-use MoonShine\Laravel\Fields\Relationships\MorphMany;
+use MoonShine\Laravel\Fields\Relationships\BelongsToMany;
 use MoonShine\Support\Attributes\Icon;
+use MoonShine\UI\Components\Badge;
 use MoonShine\UI\Components\Collapse;
 use MoonShine\UI\Components\Layout\Flex;
 use MoonShine\UI\Components\Tabs;
@@ -39,19 +38,19 @@ class UserResource extends ModelResource
 {
     use WithRolePermissions;
     use WithRoleFormComponent;
+    use Properties;
 
     protected string $model = User::class;
 
-    protected string $column = 'name';
-
-    protected array $with = ['roles'];
-
-    protected bool $columnSelection = true;
-
-    public function getTitle(): string
+    public function __construct()
     {
-        return trans('moonshine::ui.resource.admins_title');
+        $this->title(__('moonshine::ui.resource.admins_title'))
+            ->columnSelection(true)
+            ->with(['roles'])
+            ->column('name')
+            ->isAsync(false);
     }
+
 
     /**
      * @return list<FieldContract>
@@ -62,14 +61,18 @@ class UserResource extends ModelResource
         return [
             ID::make()->sortable(),
 
-             Image::make(__('moonshine::ui.resource.avatar'), 'avatar')->modifyRawValue(fn(
-                ?string $raw
-            ): string => $raw ?? ''),
+            //  Image::make(__('moonshine::ui.resource.avatar'), 'avatar')
+            //     ->modifyRawValue(fn(?string $raw): string => $raw ?? ''),
 
             Text::make(__('moonshine::ui.resource.name'), 'name'),
 
-            Email::make(__('moonshine::ui.resource.email'), 'email')
-                ->sortable(),
+            BelongsToMany::make(__('moonshine::ui.resource.role'), 'roles')
+            ->inLine(
+                separator: ' ',
+                badge: fn($model, $value) => Badge::make((string) $value, 'primary'),
+            ),
+
+            Email::make(__('moonshine::ui.resource.email'), 'email'),
 
             Date::make(__('moonshine::ui.resource.created_at'), 'created_at')
                 ->format("d/M/Y")
@@ -93,10 +96,10 @@ class UserResource extends ModelResource
                                 ->required(),
                         ]),
 
-                        Image::make(__('moonshine::ui.resource.avatar'), 'avatar')
-                            ->disk(moonshineConfig()->getDisk())
-                            ->dir('moonshine_users')
-                            ->allowedExtensions(['jpg', 'png', 'jpeg', 'gif']),
+                        // Image::make(__('moonshine::ui.resource.avatar'), 'avatar')
+                        //     ->disk(moonshineConfig()->getDisk())
+                        //     ->dir('moonshine_users')
+                        //     ->allowedExtensions(['jpg', 'png', 'jpeg', 'gif']),
 
                         Date::make(__('moonshine::ui.resource.created_at'), 'created_at')
                             ->format("d.m.Y")
@@ -124,15 +127,7 @@ class UserResource extends ModelResource
      */
     protected function detailFields(): iterable
     {
-        return [
-            ...$this->indexFields(),
-            HasMany::make(
-                __('moonshine::ui.resource.role'),
-                'roles',
-                resource: RoleResource::class,
-            )
-                ->searchable(false),
-        ];
+        return $this->indexFields();
     }
 
     /**
@@ -162,6 +157,13 @@ class UserResource extends ModelResource
             'id',
             'name',
             'email',
+        ];
+    }
+
+    protected function filters(): iterable
+    {
+        return [
+            BelongsToMany::make(__('moonshine::ui.resource.role'), 'roles')
         ];
     }
 

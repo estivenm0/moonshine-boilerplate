@@ -11,7 +11,7 @@ class GeneratePermissions extends Command
      *
      * @var string
      */
-    protected $signature = 'moonshine:generate-permissions';
+    protected $signature = 'bp:permissions';
 
     /**
      * The console command description.
@@ -25,12 +25,26 @@ class GeneratePermissions extends Command
      */
     public function handle()
     {
-        // $this->call('moonshine-rbac:permissions', [
-        //     'resourceName' => ''
-        // ]);
+        $this->call('moonshine-rbac:permissions', [
+            'resourceName' => 'UserResource'
+        ]);
+
+        $this->call('moonshine-rbac:permissions', [
+            'resourceName' => 'RoleResource'
+        ]);
+
+        $this->call('moonshine-rbac:permissions', [
+            'resourceName' => 'PermissionResource'
+        ]);
 
         // $this->call('moonshine-rbac:permissions', [
         //     'resourceName' => ''
         // ]);
+
+
+        $this->call('moonshine-rbac:role', [
+            'name' => 'Super Admin',
+            '--all-permissions' => true
+        ]);
     }
 }

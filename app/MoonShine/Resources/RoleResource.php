@@ -6,7 +6,7 @@ namespace App\MoonShine\Resources;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Role;
-
+use App\Traits\Properties;
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Fields\ID;
@@ -16,6 +16,7 @@ use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Laravel\Enums\Action;
 use MoonShine\Laravel\Fields\Relationships\HasMany;
 use MoonShine\Support\Attributes\Icon;
+use MoonShine\Support\Enums\PageType;
 use MoonShine\Support\ListOf;
 use Sweet1s\MoonshineRBAC\Traits\WithPermissionsFormComponent;
 use Sweet1s\MoonshineRBAC\Traits\WithRolePermissions;
@@ -28,14 +29,19 @@ class RoleResource extends ModelResource
 {
     use WithRolePermissions;
     use WithPermissionsFormComponent;
+    use Properties;
 
     protected string $model = Role::class;
 
-    protected string $column = 'name';
-
-    public function getTitle(): string
+    
+    public function __construct()
     {
-        return trans('moonshine::ui.resource.role');
+        $this->title(__('moonshine::ui.resource.role'))
+            ->itemsPerPage(10)
+            ->redirectAfterSave(PageType::INDEX)
+            ->column('name')
+            ->Async(false)
+            ->allInModal();
     }
 
     
