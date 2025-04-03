@@ -7,7 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "laravel/framework": "^11.31",
+        "laravel/framework": "^11.44.1",
         "laravel/tinker": "^2.9",
         "moonshine/moonshine": "^3.4",
         "sweet1s/moonshine-roles-permissions": "^3.0"

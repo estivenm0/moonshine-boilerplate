@@ -39,9 +39,7 @@ class RoleResource extends ModelResource
         $this->title(__('moonshine::ui.resource.role'))
             ->itemsPerPage(10)
             ->redirectAfterSave(PageType::INDEX)
-            ->column('name')
-            ->Async(false)
-            ->allInModal();
+            ->column('name');
     }
 
     
